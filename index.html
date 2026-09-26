@@ -14,7 +14,18 @@ let state=JSON.parse(localStorage.getItem(KEY)||"{}");if(!state.sessionId)state.
 function browser(){return navigator.userAgent}function device(){return /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)?"Mobile":"Desktop"}
 function logEvent(event,option="",extra={}){const d=new URLSearchParams({sessionId:state.sessionId,page:"Page 1",event,option,noClickCount:String(state.noClicks),timezone:Intl.DateTimeFormat().resolvedOptions().timeZone||"",localTime:new Date().toString(),browser:browser(),device:device(),screenSize:innerWidth+"x"+innerHeight,...extra});try{navigator.sendBeacon(CONFIG.LOG_URL,d)}catch(e){fetch(CONFIG.LOG_URL,{method:"POST",body:d,keepalive:true}).catch(()=>{})}}
 function save(){localStorage.setItem(KEY,JSON.stringify(state))}
-document.querySelectorAll(".yes").forEach(b=>b.onclick=()=>{state.page1Choice=b.dataset.choice;save();logEvent("Click",b.dataset.choice,{selected:"Yes"});location.href="page2.html"});
+document.querySelectorAll("[data-choice]").forEach(b => {
+  b.onclick = () => {
+    state.page1Choice = b.dataset.choice;
+    save();
+
+    logEvent("Click", b.dataset.choice, {
+      selected: "Yes"
+    });
+
+    location.href = "page2.html";
+  };
+});
 const zone=document.getElementById("noZone"),no=document.getElementById("noBtn"),hint=document.getElementById("hint");let noTexts=["Are you sure? 😏","Nice try 😂","The No button is running away!","Maybe Yes Ofcourse!!? 🥹","I know you want to say yes 😈💕"];no.onclick=()=>{state.noClicks++;save();logEvent("Click","No",{selected:"No"});hint.textContent=noTexts[Math.min(state.noClicks-1,noTexts.length-1)];const pad=8,maxX=Math.max(pad,zone.clientWidth-no.offsetWidth-pad),maxY=Math.max(pad,zone.clientHeight-no.offsetHeight-pad);no.style.transform="none";no.style.left=(pad+Math.random()*Math.max(0,maxX-pad))+"px";no.style.top=(pad+Math.random()*Math.max(0,maxY-pad))+"px"};
 for(let i=0;i<12;i++){const h=document.createElement("div");h.className="heart";h.textContent=["♥","♡","💗"][i%3];h.style.left=Math.random()*100+"%";h.style.animationDelay=Math.random()*7+"s";h.style.fontSize=18+Math.random()*25+"px";document.body.appendChild(h)}
 </script></body></html>
