@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Date With Me? 💕</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        min-height: 100vh;
+        font-family: "Poppins", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+
+        background: linear-gradient(
+            -45deg,
+            #ff9a9e,
+            #fad0c4,
+            #fbc2eb,
+            #a6c1ee,
+            #ffd1ff
+        );
+
+        background-size: 400% 400%;
+        animation: gradientBG 12s ease infinite;
+    }
+
+    @keyframes gradientBG {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    /* Main Card */
+
+    .card {
+        position: relative;
+        width: min(92%, 500px);
+        padding: 45px 30px;
+        text-align: center;
+
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 30px;
+
+        box-shadow:
+            0 20px 60px rgba(0, 0, 0, 0.15);
+
+        z-index: 10;
+    }
+
+    .emoji {
+        font-size: 55px;
+        margin-bottom: 15px;
+
+        animation: floating 3s ease-in-out infinite;
+    }
+
+    @keyframes floating {
+        0%, 100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+
+    h1 {
+        font-size: clamp(25px, 6vw, 38px);
+        font-weight: 700;
+        color: #ffffff;
+
+        text-shadow:
+            0 3px 10px rgba(0, 0, 0, 0.15);
+
+        margin-bottom: 35px;
+    }
+
+    /* Yes Buttons */
+
+    .yes-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    button {
+        font-family: "Poppins", sans-serif;
+        border: none;
+        cursor: pointer;
+        font-size: 17px;
+        font-weight: 600;
+
+        border-radius: 50px;
+        padding: 15px 25px;
+
+        transition:
+            transform 0.25s ease,
+            box-shadow 0.25s ease,
+            background 0.25s ease;
+    }
+
+    .yes-button {
+        color: white;
+
+        background: linear-gradient(
+            135deg,
+            #ff416c,
+            #ff4b2b
+        );
+
+        box-shadow:
+            0 8px 20px rgba(255, 65, 108, 0.35);
+    }
+
+    .yes-button:hover {
+        transform: translateY(-4px) scale(1.02);
+
+        box-shadow:
+            0 12px 30px rgba(255, 65, 108, 0.45);
+    }
+
+    .yes-button:active {
+        transform: scale(0.96);
+    }
+
+    /* No Button Restricted Area */
+
+    .no-area {
+        position: relative;
+
+        width: 100%;
+        height: 120px;
+
+        margin-top: 15px;
+
+        border-radius: 20px;
+
+        /*
+        The button is allowed to move ONLY inside this area.
+        */
+
+        overflow: hidden;
+    }
+
+    .no-button {
+        position: absolute;
+
+        left: 50%;
+        top: 50%;
+
+        transform: translate(-50%, -50%);
+
+        padding: 12px 28px;
+
+        color: #555;
+
+        background: rgba(255, 255, 255, 0.8);
+
+        box-shadow:
+            0 6px 18px rgba(0, 0, 0, 0.12);
+
+        white-space: nowrap;
+    }
+
+    .no-button:hover {
+        background: white;
+    }
+
+    /* Small message */
+
+    .message {
+        min-height: 25px;
+        margin-top: 10px;
+
+        font-size: 13px;
+        font-weight: 500;
+
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* Floating Hearts */
+
+    .heart {
+        position: absolute;
+
+        bottom: -50px;
+
+        font-size: 25px;
+
+        opacity: 0.7;
+
+        animation: heartFloat linear infinite;
+
+        pointer-events: none;
+    }
+
+    @keyframes heartFloat {
+
+        0% {
+            transform:
+                translateY(0)
+                rotate(0deg);
+
+            opacity: 0;
+        }
+
+        20% {
+            opacity: 0.7;
+        }
+
+        80% {
+            opacity: 0.7;
+        }
+
+        100% {
+            transform:
+                translateY(-110vh)
+                rotate(360deg);
+
+            opacity: 0;
+        }
+    }
+
+    /* Mobile */
+
+    @media (max-width: 500px) {
+
+        .card {
+            padding: 35px 22px;
+            border-radius: 25px;
+        }
+
+        .emoji {
+            font-size: 45px;
+        }
+
+        h1 {
+            margin-bottom: 28px;
+        }
+
+        .no-area {
+            height: 110px;
+        }
+
+        button {
+            font-size: 16px;
+        }
+    }
+</style>
+</head>
+
+
+<body>
+
+<!-- Floating Hearts -->
+
+<div class="heart" style="left: 5%; animation-duration: 9s; animation-delay: 0s;">💗</div>
+<div class="heart" style="left: 18%; animation-duration: 12s; animation-delay: 2s;">💕</div>
+<div class="heart" style="left: 32%; animation-duration: 10s; animation-delay: 4s;">💖</div>
+<div class="heart" style="left: 48%; animation-duration: 13s; animation-delay: 1s;">💗</div>
+<div class="heart" style="left: 65%; animation-duration: 11s; animation-delay: 3s;">💞</div>
+<div class="heart" style="left: 80%; animation-duration: 14s; animation-delay: 5s;">💕</div>
+<div class="heart" style="left: 92%; animation-duration: 10s; animation-delay: 2s;">💖</div>
+
+
+<!-- Main Card -->
+
+<div class="card">
+
+    <div class="emoji">
+        💕
+    </div>
+
+    <h1>
+        Do you want to<br>
+        come on a date with me?
+    </h1>
+
+
+    <!-- YES OPTIONS -->
+
+    <div class="yes-buttons">
+
+        <button
+            class="yes-button"
+            onclick="chooseYes('Yes')">
+            Yes
+        </button>
+
+        <button
+            class="yes-button"
+            onclick="chooseYes('Yes Ofcourse!!')">
+            Yes Ofcourse!! 💖
+        </button>
+
+    </div>
+
+
+    <!-- Restricted No Button Area -->
+
+    <div class="no-area" id="noArea">
+
+        <button
+            class="no-button"
+            id="noButton"
+            onclick="moveNoButton()">
+            No 😏
+        </button>
+
+    </div>
+
+
+    <div
+        class="message"
+        id="message">
+    </div>
+
+</div>
+
+
+<script>
+
+    /*
+    ==========================================
+    YES BUTTON
+    ==========================================
+    */
+
+    function chooseYes(choice) {
+
+        // Store which option was selected
+        localStorage.setItem("dateChoice", choice);
+
+        // Store number of No clicks
+        const noClicks =
+            localStorage.getItem("noClickCount") || 0;
+
+        localStorage.setItem(
+            "noClickCount",
+            noClicks
+        );
+
+        /*
+        Move to Page 2.
+        We will create page2.html next.
+        */
+
+        window.location.href = "page2.html";
+    }
+
+
+    /*
+    ==========================================
+    NO BUTTON
+    ==========================================
+    */
+
+    function moveNoButton() {
+
+        const noButton =
+            document.getElementById("noButton");
+
+        const noArea =
+            document.getElementById("noArea");
+
+        const message =
+            document.getElementById("message");
+
+
+        /*
+        Count how many times No was clicked.
+        */
+
+        let count =
+            parseInt(
+                localStorage.getItem("noClickCount") || "0"
+            );
+
+        count++;
+
+        localStorage.setItem(
+            "noClickCount",
+            count
+        );
+
+
+        /*
+        Get dimensions of the restricted area.
+        */
+
+        const areaWidth =
+            noArea.clientWidth;
+
+        const areaHeight =
+            noArea.clientHeight;
+
+        const buttonWidth =
+            noButton.offsetWidth;
+
+        const buttonHeight =
+            noButton.offsetHeight;
+
+
+        /*
+        Padding keeps the button away
+        from the very edge.
+        */
+
+        const padding = 10;
+
+
+        /*
+        Calculate safe movement boundaries.
+        */
+
+        const maxX =
+            areaWidth -
+            buttonWidth -
+            padding * 2;
+
+        const maxY =
+            areaHeight -
+            buttonHeight -
+            padding * 2;
+
+
+        /*
+        Generate random position.
+        */
+
+        const randomX =
+            Math.random() * maxX + padding;
+
+        const randomY =
+            Math.random() * maxY + padding;
+
+
+        /*
+        Move button.
+        */
+
+        noButton.style.left =
+            randomX + "px";
+
+        noButton.style.top =
+            randomY + "px";
+
+        noButton.style.transform =
+            "none";
+
+
+        /*
+        Change message based on attempts.
+        */
+
+        if (count === 1) {
+
+            message.innerText =
+                "Are you sure? 😏";
+
+        } else if (count === 2) {
+
+            message.innerText =
+                "You can't escape that easily 😂";
+
+        } else if (count === 3) {
+
+            message.innerText =
+                "The No button is getting nervous 👀";
+
+        } else if (count === 4) {
+
+            message.innerText =
+                "Maybe just click Yes? 🥹";
+
+        } else if (count >= 5) {
+
+            message.innerText =
+                "Okay... I see what you're trying to do 😈💕";
+        }
+    }
+
+
+    /*
+    ==========================================
+    PREVENT BUTTON FROM GETTING STUCK
+    ==========================================
+    */
+
+    window.addEventListener(
+        "resize",
+        function () {
+
+            const noButton =
+                document.getElementById("noButton");
+
+            const noArea =
+                document.getElementById("noArea");
+
+
+            /*
+            Put button back into center
+            if screen size changes.
+            */
+
+            noButton.style.left =
+                "50%";
+
+            noButton.style.top =
+                "50%";
+
+            noButton.style.transform =
+                "translate(-50%, -50%)";
+        }
+    );
+
+</script>
+
+</body>
+</html>
+
